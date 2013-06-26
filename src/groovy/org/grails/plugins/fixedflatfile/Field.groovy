@@ -41,6 +41,16 @@ class Field extends Command {
 			def v=text.substring(begin-1,end)
 			if (!notrim)
 				v=v.trim()
+			if (type) {
+				switch(type.toUpperCase()) {
+					case 'N':
+					case 'NUMERIC':
+					case 'NUMBER':
+					case 'INTEGER':
+						v=v.toInteger()
+						break
+				}
+			}
 			if (convert && convert instanceof Closure) {
 				if (convert.maximumNumberOfParameters==2)
 					v=convert(v,context)
@@ -66,7 +76,10 @@ class Field extends Command {
 			}
 			if (val==null)
 				throw new FixedLenFileException("No value or default for field ${name}")
-			put(text,val,begin,end)
+				
+			//put(text,val,begin,end)
+			def size=end-begin+1
+			text+formatField(val,size)
 		} catch(Exception e) {
 			throw new FixedLenFileException("Error to generate field '${name}': ${e.message}",e)
 		}

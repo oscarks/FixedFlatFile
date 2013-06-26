@@ -86,6 +86,22 @@ class FixedLenFileBuilder extends BuilderSupport {
 			def e=new SizeEqualCommand(size:s,closure:closure)
 			enqueue()
 			return e
+		} else if(name=='TAB') {
+			position=position+1
+			return new Tab()
+		} else if(name=='NL') {
+			def type=attributes['type']
+			def len=1
+			if (type) {
+				type=type.toLowerCase()
+				if (type in ['windows','dos','os2','symbian','palm']) {
+					type='dos'
+					len=2
+				} else if (type in ['linux','unix']) type='linux'
+				else throw new FixedLenFileException("Invalid new line type (${type}). Expected types: 'windows','dos','os2','symbian','palm','linux','unix'")
+			} else type='linux'
+			position=position+len
+			return new NewLine(type:type)
         } else {
             def begin=attributes['begin']
             def end=attributes['end']
@@ -182,7 +198,7 @@ class FixedLenFileBuilder extends BuilderSupport {
             def test=attributes['test']
 			def closure=attributes['closure']
             return new IfCommand(test:test,closure:closure)
-        } else if(name=='contant') {
+        } else if(name=='constant') {
 			def align=attributes['align']
 			def length=attributes['length']
 			if (!length) length=value.toString().size()

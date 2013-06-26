@@ -30,5 +30,8 @@ class Constant extends Command {
 	def generate(context,text=''){
 		text+value.toString()
 	}
-
+	def parse(text,context){
+		if (text!=value) throw new RuntimeException("Invalid contant. Expected $value found $text")
+		context
+	}
 }
