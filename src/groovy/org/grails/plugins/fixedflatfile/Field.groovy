@@ -98,7 +98,7 @@ class Field extends Command {
 		if (val==null) fieldVal=''
 		else fieldVal=val.toString()
 		if (fieldVal.size()>size) {
-			if(!truncate) throw new RuntimeException("Value bigger then size of field")
+			if(!truncate) throw new RuntimeException("Value bigger then size of field $name")
 			else if (fieldAlign=='R') fieldVal=fieldVal.substring(fieldVal.size()-size)
 			else fieldVal=fieldVal.substring(0,size)
 		} else {
