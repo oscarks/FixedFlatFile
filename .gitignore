@@ -1,6 +1,7 @@
 Servers
 .metadata
 .classpath
+.settings
 grails-fixed-flat-file-*.zip
 grails-fixed-flat-file-*.zip.sha1
 target-eclipse

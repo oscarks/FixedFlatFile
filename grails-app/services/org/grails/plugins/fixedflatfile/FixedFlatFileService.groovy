@@ -19,7 +19,8 @@ package org.grails.plugins.fixedflatfile
  *
  */
 class FixedFlatFileService {
-
+	static transactional = false
+	
     def createBuilder() {
 		new FixedLenFileBuilder()
     }

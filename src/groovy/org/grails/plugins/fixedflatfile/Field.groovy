@@ -37,8 +37,9 @@ class Field extends Command {
 		"${name} ([${begin}..${end}]) {\n ${closure}\n}"
 	}
 	def parse(text,context){
+		def v
 		try {
-			def v=text.substring(begin-1,end)
+			v=text.substring(begin-1,end)
 			if (!notrim)
 				v=v.trim()
 			if (type) {
@@ -62,7 +63,7 @@ class Field extends Command {
 			}
 			context
 		} catch(Exception e) {
-			throw new FixedLenFileException("Error to parse field ${name}: ${e.message}",e)
+			throw new FixedLenFileException("Error to parse field '${name}' [$begin-$end] = '${v}': ${e.message}",e)
 		}
 	}
 	def generate(context,text=''){
@@ -98,7 +99,7 @@ class Field extends Command {
 		if (val==null) fieldVal=''
 		else fieldVal=val.toString()
 		if (fieldVal.size()>size) {
-			if(!truncate) throw new RuntimeException("Value bigger then size of field $name")
+			if(!truncate) throw new RuntimeException("Value bigger then size of field $name (value: $val)")
 			else if (fieldAlign=='R') fieldVal=fieldVal.substring(fieldVal.size()-size)
 			else fieldVal=fieldVal.substring(0,size)
 		} else {
