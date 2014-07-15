@@ -18,10 +18,10 @@ package org.grails.plugins.fixedflatfile
 class IfCommand extends ControlCommand {
 	def test
 	Steps steps
-	def parse(text,context){
+	def parse(text,context,exec=true){
 		if(test(context)) {
-			steps.parse(text,context)
-			if(closure)
+			steps.parse(text,context,exec)
+			if(exec && closure)
 				closure(context)
 		}
 		context

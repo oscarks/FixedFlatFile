@@ -23,11 +23,13 @@ class Steps {
 	String toString() {
 		"${name ? name : 'steps'} {\n${commands.each{ it }}\n}"
 	}
-	def parse(text,context) {
+	def parse(text,context,exec=true) {
 		commands.each {
-			it.parse(text,context)
+			if (it instanceof ControlCommand)
+				it.parse(text,context,exec)
+			else it.parse(text,context)
 		}
-		if (closure) {
+		if (exec && closure) {
 			closure(context)
 		}
 		context

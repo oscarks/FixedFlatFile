@@ -26,11 +26,11 @@ class SizeEqualCommand extends ControlCommand{
 		return text ? size==text.size() : false
 	}
 	
-	def parse(String text, context) {
+	def parse(String text, context,exec=true) {
 		if (satisfy(text)) {
 			println "Tamanho OK       : ${text.size()} [${size}]"
-			steps.parse(text,context)
-			if(closure) {
+			steps.parse(text,context,exec)
+			if(exec && closure) {
 				println "Executando Closure"
 				closure(context)
 			}

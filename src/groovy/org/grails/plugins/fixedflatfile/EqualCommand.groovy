@@ -35,10 +35,10 @@ class EqualCommand extends ControlCommand{
 		return r
 	}
 	
-	def parse(String text, context) {
+	def parse(String text, context,exec=true) {
 		if (satisfy(context)) {
-			steps.parse(text,context)
-			if(closure)
+			steps.parse(text,context,exec)
+			if(exec && closure)
 				closure(context)
 		}
 		context
